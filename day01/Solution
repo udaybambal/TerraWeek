@@ -1,0 +1,68 @@
+Introduction to Terraform and Terraform Basics
+
+    What is Terraform and how can it help you manage infrastructure as code?
+    Terraform is an infrastructure as code tool that lets you define and manage your infrastructure using code. You write 
+    configuration files that describe the desired state of your infrastructure, and Terraform handles the creation, updates, and
+    deletion of resources to match that state. This approach improves automation, version control, and consistency in managing your
+    infrastructure.
+
+    Why do we need Terraform and how does it simplify infrastructure provisioning?
+    We need Terraform because it simplifies infrastructure provisioning by automating the creation, management, and updates of 
+    resources using code. It ensures consistency, reduces manual errors, and facilitates collaboration among teams, making it 
+    easier to scale and maintain complex infrastructures.
+
+    How can you install Terraform and set up the environment for AWS, Azure, or GCP?
+    1. Install Terraform:
+        Download the Terraform binary from the official website.
+        Install it by adding the binary to your system's PATH.
+
+    2. Set Up Provider Credentials:
+        AWS: Configure AWS credentials (CLI or environment variables).
+        Azure: Create a service principal and set environment variables.
+        GCP: Create a service account key and set GOOGLE_APPLICATION_CREDENTIALS.
+
+    3. Write Terraform Configuration:
+        Create a .tf file with provider and resource configurations.
+
+    4. Initialize and Apply:
+        Run terraform init to initialize.
+        Use terraform plan to preview changes.
+        Execute terraform apply to create/update resources.
+
+    Explain the important terminologies of Terraform with the example at least (5 crucial terminologies).
+    1. Provider: A provider is responsible for interacting with a specific infrastructure platform (e.g., AWS, Azure, GCP).
+    Example: aws is the provider for Amazon Web Services (AWS).
+    provider "aws" {
+      region = "us-west-2"
+    }
+   
+    2. Resource: A resource represents a piece of infrastructure that Terraform manages (e.g., virtual machine, network, storage).
+    Example: Creating an AWS EC2 instance.
+    resource "aws_instance" "example" {
+      ami           = "ami-0c55b159cbfafe1f0"
+      instance_type = "t2.micro"
+    }
+
+    3. Module: A module is a collection of Terraform files that define a set of related resources, allowing for reusability and 
+    organization.
+    Example: Creating a reusable module for an AWS VPC (Virtual Private Cloud). 
+    module "vpc" {
+      source = "./modules/vpc"
+      cidr   = "10.0.0.0/16"
+    }
+
+    4. Variable: A variable is a parameter that allows you to pass values into Terraform configurations.
+    Example: Defining a variable for the number of instances in an AWS autoscaling group.
+    variable "instance_count" {
+      description = "Number of instances in the autoscaling group."
+      type        = number
+      default     = 3
+    }
+
+    5. Output: An output is a value that is extracted from the Terraform state after applying the configuration. 
+    It can be useful for displaying important information.
+    Example: Outputting the public IP address of an AWS EC2 instance.
+    output "public_ip" {
+      description = "Public IP address of the EC2 instance."
+      value       = aws_instance.example.public_ip
+    }
